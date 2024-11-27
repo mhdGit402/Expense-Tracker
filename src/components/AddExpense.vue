@@ -8,9 +8,11 @@ const addTransaction = () => {
   const transaction = {
     text: transactionText.value,
     amount: transactionAmount.value,
+    type: Number(transactionAmount.value) > 0 ? true : false,
   }
   emit('addTransaction', transaction)
-  // console.log(transaction.value)
+  transactionText.value = ''
+  transactionAmount.value = ''
 }
 </script>
 
@@ -38,7 +40,7 @@ const addTransaction = () => {
         <label
           for="transactionAmount"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Amount (add negetive for expense)</label
+          >Amount (add - for expense and + for income)</label
         >
         <input
           v-model="transactionAmount"

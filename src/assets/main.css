@@ -5,3 +5,11 @@
 /* body {
   @apply font-serif; This applies the serif font family globally
 } */
+
+.income {
+  border-right: 3px solid rgb(74 222 128 / var(--tw-text-opacity, 1));
+}
+
+.expense {
+  border-right: 3px solid rgb(248 113 113 / var(--tw-text-opacity, 1));
+}

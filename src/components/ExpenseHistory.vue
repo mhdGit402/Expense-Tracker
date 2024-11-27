@@ -1,32 +1,33 @@
 <script setup>
-import { onUpdated } from 'vue'
 import Transaction from './partials/Transaction.vue'
 import { ref, watch } from 'vue'
 
 // Define props
 const props = defineProps(['transaction'])
+const emit = defineEmits(['handleExpense'])
+const allTransaction = ref([])
 
-const newTransaction = ref({})
+// Watch for changes to the props
+watch(
+  () => [props.transaction.text, props.transaction.amount, props.transaction.type],
+  (newValues) => {
+    const [text, amount, type] = newValues
 
-// Watch for changes to the prop
-// watch(
-//   () => props.transaction,
-//   (newValue, oldValue) => {
-//     console.log('Prop changed from', oldValue, 'to', newValue)
-//   },
-// )
+    // Create a new transaction object
+    const newTransaction = { text, amount, type } // Create a new object here
 
-onUpdated(() => {
-  newTransaction.value = props.transaction
-})
+    // Push the new transaction to the allTransaction array
+    allTransaction.value.push(newTransaction) // Push the new object
+    emit('handleExpense', allTransaction)
+  },
+)
 </script>
 
 <template>
   <div class="mt-8">
     <h4>History</h4>
     <hr class="border-gray-500 border-2 mb-5" />
-    <Transaction :transactionText="newTransaction.text" :transactionAmount="newTransaction.amount">
-    </Transaction>
+    <Transaction :allTransaction="allTransaction"> </Transaction>
   </div>
 </template>
 
